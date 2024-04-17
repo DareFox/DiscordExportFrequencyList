@@ -1,6 +1,7 @@
 package me.darefox
 
 import java.io.File
+import kotlin.time.measureTime
 
 suspend fun main(args: Array<String>) {
     val argsAsList = args.toList()
@@ -18,7 +19,11 @@ suspend fun main(args: Array<String>) {
         File(outputArg)
     }
 
-    FrequencyFileGenerator.generate(inputFile, outputFile)
+    measureTime {
+        FrequencyFileGenerator.generate(inputFile, outputFile)
+    }.also {
+        println("Finished. Time elapsed: $it")
+    }
 }
 
 private fun createNeighborFile(file: File): File {
