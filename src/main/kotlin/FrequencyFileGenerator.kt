@@ -7,8 +7,9 @@ object FrequencyFileGenerator {
     private val calculationScope = CoroutineScope(Dispatchers.Default + CoroutineName("FrequencyCalculationScope"))
 
     suspend fun generate(file: File, saveTo: File) {
-        require(file.extension == "txt") {
-            "Program supports only .txt format of discord chat export"
+        if (file.extension != "txt") {
+            println("ERROR: Program supports only .txt format of discord chat export")
+            return
         }
 
         val frequencySum = mutableMapOf<String, Long>()
