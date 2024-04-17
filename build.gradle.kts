@@ -1,9 +1,10 @@
 plugins {
     kotlin("jvm") version "1.9.23"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "me.darefox"
-version = "1.0-SNAPSHOT"
+version = "1.0"
 
 repositories {
     mavenCentral()
