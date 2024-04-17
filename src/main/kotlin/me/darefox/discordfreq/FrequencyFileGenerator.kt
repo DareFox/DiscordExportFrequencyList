@@ -1,4 +1,4 @@
-package me.darefox
+package me.darefox.discordfreq
 
 import kotlinx.coroutines.*
 import java.io.File
@@ -17,7 +17,7 @@ object FrequencyFileGenerator {
         var messageCounter = 0
 
         while (true) {
-            val amountMessages = 1000
+            val amountMessages = 2500
             println("\nReading $amountMessages messages")
             val messages = reader.readMessages(amountMessages)
             messageCounter += messages.size
@@ -50,7 +50,7 @@ object FrequencyFileGenerator {
         withContext(Dispatchers.IO) {
             println("Creating new file")
             saveTo.createNewFile()
-            println("Writing to new file")
+            println("Writing to ${saveTo.absolutePath}")
             val listAsText = list.joinToString(
                 separator = "\n",
                 prefix = "",

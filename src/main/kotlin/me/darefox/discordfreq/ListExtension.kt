@@ -1,4 +1,4 @@
-package me.darefox
+package me.darefox.discordfreq
 
 /**
  * Splits the elements of the array into N equal parts as evenly as possible.

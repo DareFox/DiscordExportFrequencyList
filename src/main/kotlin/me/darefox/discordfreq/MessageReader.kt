@@ -1,4 +1,4 @@
-package me.darefox
+package me.darefox.discordfreq
 
 import java.io.File
 
