@@ -46,7 +46,8 @@ object MessageCleaner {
         val discordTags = listOf(
             "{Stickers}",
             "{Embed}",
-            "{Attachments}"
+            "{Attachments}",
+            "{Reactions}"
         )
         for (line in lines) {
             if (line in discordTags) {
