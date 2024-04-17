@@ -13,6 +13,9 @@ class MessageReader(file: File) {
 
     private var currentHeader: String? = null
 
+    /**
+     * Read messages by chunks, returns empty list if no messages are left to read
+     */
     fun readMessages(amount: Int): List<Message> {
         val chunks = mutableListOf<Message>()
 
@@ -25,10 +28,10 @@ class MessageReader(file: File) {
             if (isHeader) {
                 when {
                     currentHeader != null -> {
-                        val trimmed = trimEmptyEndLines(textBuffer)
-                        require(trimmed.isNotEmpty()) { "Text is empty" }
-
-                        chunks += Message(currentHeader!!, trimmed)
+                        val trimmed = textBuffer.trimEmptyEndLines()
+                        if (trimmed.isNotEmpty()) {
+                            chunks += Message(currentHeader!!, trimmed)
+                        }
 
                         currentHeader = line
                         textBuffer.clear()
@@ -40,26 +43,13 @@ class MessageReader(file: File) {
             }
         }
 
-        if (currentHeader != null) {
-            val trimmed = trimEmptyEndLines(textBuffer)
-            require(trimmed.isNotEmpty()) { "Text is empty" }
-            chunks += Message(currentHeader!!, trimmed)
-        }
-
-        return chunks
-    }
-
-    private fun trimEmptyEndLines(lines: List<String>): List<String> {
-        var emptyLinesCount = 0
-        for (line in lines.asReversed()) {
-            if (line.isEmpty()) {
-                emptyLinesCount++
-            } else {
-                break
-
+        if (currentHeader != null && textBuffer.isNotEmpty()) {
+            val trimmed = textBuffer.trimEmptyEndLines()
+            if (trimmed.isNotEmpty()) {
+                chunks += Message(currentHeader!!, trimmed)
             }
         }
 
-        return lines.slice(0 until (lines.size - emptyLinesCount))
+        return chunks
     }
 }
