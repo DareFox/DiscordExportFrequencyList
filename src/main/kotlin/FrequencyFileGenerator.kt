@@ -13,12 +13,17 @@ object FrequencyFileGenerator {
 
         val frequencySum = mutableMapOf<String, Long>()
         val reader = MessageReader(file)
+        var messageCounter = 0
 
         while (true) {
             val amountMessages = 1000
             println("\nReading $amountMessages messages")
             val messages = reader.readMessages(amountMessages)
-            if (messages.isEmpty()) break
+            messageCounter += messages.size
+            if (messages.isEmpty()) {
+                println("Finished reading all messages\n")
+                break
+            }
 
             println("Cleaning messages")
             val splitCleanMessages = MessageCleaner.clean(messages).splitIntoParts(RuntimeInfo.cpuThreads)
@@ -36,6 +41,7 @@ object FrequencyFileGenerator {
                     frequencySum[current.key] = sumValue + current.value
                 }
             }
+            println("Total messages read: $messageCounter")
         }
 
         println("Converting frequencies to sorted list")
