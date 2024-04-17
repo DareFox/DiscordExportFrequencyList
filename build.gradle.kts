@@ -1,4 +1,5 @@
 plugins {
+    application
     kotlin("jvm") version "1.9.23"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
@@ -18,6 +19,11 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+application {
+    mainClass.set("me.darefox.discordfreq.MainKt")
+}
+
 kotlin {
-    jvmToolchain(18)
+    jvmToolchain(8)
 }
